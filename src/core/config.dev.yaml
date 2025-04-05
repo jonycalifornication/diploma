@@ -1,0 +1,14 @@
+BOT_TOKEN: !ENV ${BOT_TOKEN}
+BOT_MODE: !ENV ${BOT_MODE}  # polling или webhook
+
+# Настройки вебхука
+WEBHOOK_PATH: !ENV ${WEBHOOK_PATH}
+WEBHOOK_URL:  !ENV ${WEBHOOK_URL}
+
+# Хост и порты
+HOST: !ENV ${HOST}
+PORT: 3000
+
+API_URL: !ENV ${API_URL}
+API_TOKEN: !ENV ${API_TOKEN}
+GEMINI_API_KEY: !ENV ${GEMINI_API_KEY}

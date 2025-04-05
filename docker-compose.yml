@@ -1,0 +1,22 @@
+services:
+  app:
+    container_name: aiogram-bot
+    platform: linux/amd64
+    build:
+      context: .
+      dockerfile: Dockerfile
+    env_file:
+      - .env
+    environment:
+      CONFIG_FILE: "config.dev.yaml"
+    entrypoint: "./entrypoint.sh"
+    volumes:
+      - ./src:/app/src/
+    networks:
+      - aiogram_network
+    ports:
+      - "3000:3000"
+
+networks:
+  aiogram_network:
+    name: aiogram_network
