@@ -24,3 +24,6 @@ class DownloadCallback(CallbackData, prefix="download_b"):
 
 class ChapterCallback(CallbackData, prefix="chapter"):
     course_id: str
+
+class ChapterInfoCallback(CallbackData, prefix="chapter_info"):
+    chapter_id: str

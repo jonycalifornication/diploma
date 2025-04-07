@@ -56,42 +56,21 @@ async def send_courses(destination: types.Message | types.CallbackQuery, telegra
 async def course_info(callback_query: types.CallbackQuery, callback_data: CourseCallback):
     course_id = callback_data.course_id  # Извлекаем ID курса
     course = await api_service.get_course(course_id=course_id)
-    user_info = await api_service.check_user(telegram_id=callback_query.from_user.id)
 
     if not course:
         await callback_query.answer("Не удалось получить информации о курсе", show_alert=True)
         return
 
-    is_enrolled = False
-    if user_info and user_info.course:
-        # Проверяем, есть ли курс с таким ID в списке курсов пользователя
-        is_enrolled = any(user_course.id == course_id for user_course in user_info.course)
-
-    button_text = "❌ Отписаться от курса" if is_enrolled else "✅ Записаться на курс"
-    course_action = False if is_enrolled else True
-
     unsubscribe_button = InlineKeyboardMarkup(
         inline_keyboard=[
             [
                 InlineKeyboardButton(
-
-                    text=button_text,
-                    callback_data=EnrollmentCallback(course_enroll=course_action, course_id=course_id).pack(),
-                ),
-                InlineKeyboardButton(
                     text="🤔 Задать вопрос", callback_data=CourseQuestionCallback(course_id=course_id).pack()
                 ),
-            ],
-            [
                 InlineKeyboardButton(
                     text="🤔 Содержание курса",
                     callback_data=ChapterCallback(course_id=course_id).pack(),
-                ),
-                # InlineKeyboardButton(
-                #     text="🤔 Преподаватель",
-                #     callback_data=InstructorCallback(
-                #     instructor_id=course.instructor.id).pack()),
-
+                )
             ]
         ]
     )

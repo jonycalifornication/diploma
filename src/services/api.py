@@ -1,3 +1,5 @@
+import logging
+
 import aiohttp
 
 from src import settings
@@ -8,7 +10,7 @@ from src.services.schemas.schemas import (
     InstructorListResponse,
     UserCreate,
     BookInfo,
-    BookListResponse, ChapterListResponse,
+    BookListResponse, ChapterListResponse, ChapterInfo, ChapterItem,
 )
 from src.services.schemas.user import UserResponse
 
@@ -108,6 +110,14 @@ class APIService:
         if not res:
             return None
         return ChapterListResponse(**res)
+
+    async def get_chapter(self, chapter_id: str):
+        endpoint = f"chapter/{chapter_id}"
+        res = await self._request("GET", endpoint=endpoint)
+        logging.info(f"CHAPTER RESPONSE: {res}")
+        if res:
+            return ChapterItem(**res)  # Предполагаем, что у вас есть модель Chapter
+        return None
 
 
 

@@ -90,12 +90,16 @@ class InstructorListResponse(PaginatedResponse[InstructorItem]):
 class ChapterInfo(BaseModel):
     id: str
     title: str
-    description: str | None
+    description: str
+    order: int
+    course_id: str | None
 
 class ChapterItem (BaseModel):
     id: str
     title: str
     order: int
+    description: str | None = None
+    course_id: str | None = None
 
 class ChapterListResponse(PaginatedResponse[ChapterItem]):
     pass

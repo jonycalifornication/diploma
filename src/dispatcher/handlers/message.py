@@ -6,7 +6,8 @@ from aiogram.types import (
 )
 from pydantic import ValidationError
 
-from src.dispatcher.callback_datas import EnrollmentCallback, InstructorCallback, BookCallback, DownloadCallback
+from src.dispatcher.callback_datas import EnrollmentCallback, InstructorCallback, BookCallback, DownloadCallback, \
+    CourseQuestionCallback, ChapterCallback
 from src.dispatcher.keyboards.keyboard import search_keyboard
 from src.dispatcher.messages.course_details import course_details, instructor_details, book_details
 from src.dispatcher.states.registration import RegistrationForm
@@ -80,8 +81,11 @@ async def handle_course_by_id(message: types.Message, state: FSMContext):
             inline_keyboard=[
                 [
                     InlineKeyboardButton(
-                        text="Записаться на курс",
-                        callback_data=EnrollmentCallback(course_enroll=True, course_id=course.id).pack(),
+                        text="🤔 Задать вопрос", callback_data=CourseQuestionCallback(course_id=course_id).pack()
+                    ),
+                    InlineKeyboardButton(
+                        text="🤔 Содержание курса",
+                        callback_data=ChapterCallback(course_id=course_id).pack(),
                     )
                 ]
             ]
